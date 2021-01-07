@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Estacionamento.Api.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -27,9 +28,11 @@ namespace Estacionamento.Api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<algumacoisacontext>(options =>
-            options.UseMySql(Configuration.GetConnectionString("EFcoreWebAPIContext"), builder =>
-            builder.MigrationsAssembly("Estacionamento.WebAPI")));
+            
+
+            //services.AddDbContext<EstacionamentoContext>(options =>
+            //options.UseMySql(Configuration.GetConnectionString("EstacionamentoWebAPIContext"), builder =>
+            //builder.MigrationsAssembly("Estacionamento.API")));
 
         }
 

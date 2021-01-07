@@ -1,7 +1,7 @@
 ﻿
 namespace Projeto.Entities.Enums
 {
-    enum StatusCliente
+    public enum StatusCliente
     {
 
         Passante = 1,
