@@ -9,7 +9,7 @@ namespace Projeto.Entities
         public string Id_Cpf { get; private set; }
         public string Nome { get; set; }
         public StatusCliente StatusCliente { get; set; }
-        public List<Carro> Carros { get; set; }
+        public ICollection<Carro> Carros { get; set; }
 
 
         //public List<Cliente> ListaCliente = new List<Cliente>();

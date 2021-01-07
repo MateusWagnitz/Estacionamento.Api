@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Estacionamento.Api.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Projeto.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +15,40 @@ namespace Estacionamento.Api.Controllers
     [ApiController]
     public class TicketController : ControllerBase
     {
-        // GET: api/<TicketController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public readonly EstacionamentoContext _context;
+
+        public TicketController(EstacionamentoContext context)
         {
-            return new string[] { "value1", "value2" };
+            _context = context;
+        }
+
+        // GET: api/<TicketController>
+        [HttpGet("filtro/{ticket}")]
+        public ActionResult GetFiltro(string ticket)
+        {
+            var listTickets = _context.Tickets
+                            .Where(h => EF.Functions.Like(h.Id_Ticket, $"%{ticket}%"))
+                            .OrderBy(h => h.Id_Ticket)
+                            .LastOrDefault();
+
+            return Ok(listTickets);
         }
 
         // GET api/<TicketController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("AddRange")]
+        public ActionResult GetAddRange()
         {
-            return "value";
+            _context.AddRange(
+                //new Ticket {   },
+                //new Ticket {   },
+                //new Ticket {   },
+                //new Ticket {   },
+                //new Ticket {   }
+                
+            );
+            _context.SaveChanges();
+
+            return Ok();
         }
 
         // POST api/<TicketController>
@@ -39,9 +64,14 @@ namespace Estacionamento.Api.Controllers
         }
 
         // DELETE api/<TicketController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public void Delete(int id)
         {
+            var ticket = _context.Tickets
+                                .Where(x => x.Id_Ticket == id.ToString())
+                                .Single();
+            _context.Tickets.Remove(ticket);
+            _context.SaveChanges();
         }
     }
 }

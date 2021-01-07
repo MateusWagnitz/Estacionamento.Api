@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Estacionamento.Api.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Projeto.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +15,39 @@ namespace Estacionamento.Api.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
-        // GET: api/<ClienteController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public readonly EstacionamentoContext _context;
+
+        public ClienteController(EstacionamentoContext context)
         {
-            return new string[] { "value1", "value2" };
+            _context = context;
+        }
+
+        // GET: api/<ClienteController>        
+        [HttpGet("filtro/{cliente}")]
+        public ActionResult GetFiltro(string cliente)
+        {
+            var listClientes = _context.Clientes
+                            .Where(h => EF.Functions.Like(h.Id_Cpf, $"%{cliente}%"))
+                            .OrderBy(h => h.Nome)
+                            .LastOrDefault();
+
+            return Ok(listClientes);
         }
 
         // GET api/<ClienteController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("AddRange")]
+        public ActionResult GetAddRange()
         {
-            return "value";
+            _context.AddRange(
+                new Cliente { Nome = "João da silva" },
+                new Cliente { Nome = "João magalhães" },
+                new Cliente { Nome = "João zezinho" },
+                new Cliente { Nome = "João elefante" },
+                new Cliente { Nome = "João palito" }
+            );
+            _context.SaveChanges();
+
+            return Ok();
         }
 
         // POST api/<ClienteController>
@@ -39,9 +63,15 @@ namespace Estacionamento.Api.Controllers
         }
 
         // DELETE api/<ClienteController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
+        
         public void Delete(int id)
         {
+            var carro = _context.Carros
+                                .Where(x => x.Id_Placa == id.ToString())
+                                .Single();
+            _context.Carros.Remove(carro);
+            _context.SaveChanges();
         }
     }
 }

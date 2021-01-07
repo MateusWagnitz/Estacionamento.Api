@@ -1,4 +1,5 @@
 ﻿using Estacionamento.Api.Data;
+
 using Microsoft.EntityFrameworkCore;
 using Projeto.Entities;
 using System;
@@ -116,6 +117,11 @@ namespace Estacionamento.Api.Repository
             query = query.AsNoTracking().OrderBy(h => h.Id_Ticket);
 
             return await query.FirstOrDefaultAsync();
+        }
+
+        Task<Carro> IEstacionamentoRepository.GetCarroById(int id, bool incluirPatio)
+        {
+            throw new NotImplementedException();
         }
     }
 }
