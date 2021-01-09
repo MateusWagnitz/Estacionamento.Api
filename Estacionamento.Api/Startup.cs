@@ -1,4 +1,5 @@
 ﻿using Estacionamento.Api.Data;
+using Estacionamento.Api.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,13 @@ namespace Estacionamento.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+                //.AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                //services.AddCors();
 
             
+
+            services.AddScoped<IRepositoryPatio, RepositoryPatio>();
+            services.AddScoped<IRepositoryCliente, RepositoryCliente>();
 
             //services.AddDbContext<EstacionamentoContext>(options =>
             //options.UseMySql(Configuration.GetConnectionString("EstacionamentoWebAPIContext"), builder =>

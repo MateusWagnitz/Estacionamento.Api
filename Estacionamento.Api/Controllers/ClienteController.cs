@@ -1,4 +1,5 @@
 ﻿using Estacionamento.Api.Data;
+using Estacionamento.Api.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Projeto.Entities;
@@ -15,63 +16,37 @@ namespace Estacionamento.Api.Controllers
     [ApiController]
     public class ClienteController : ControllerBase
     {
-        public readonly EstacionamentoContext _context;
+        private readonly IRepositoryCliente repo;
+        //public readonly EstacionamentoContext _context;
 
-        public ClienteController(EstacionamentoContext context)
+        public ClienteController(IRepositoryCliente repo)
         {
-            _context = context;
+            this.repo = repo;
         }
 
-        // GET: api/<ClienteController>        
-        [HttpGet("filtro/{cliente}")]
-        public ActionResult GetFiltro(string cliente)
+        [HttpGet]
+        public async Task<List<Cliente>> Get()
         {
-            var listClientes = _context.Clientes
-                            .Where(h => EF.Functions.Like(h.Id_Cpf, $"%{cliente}%"))
-                            .OrderBy(h => h.Nome)
-                            .LastOrDefault();
-
-            return Ok(listClientes);
+            return await this.repo.BuscaGeral();
         }
 
-        // GET api/<ClienteController>/5
-        [HttpGet("AddRange")]
-        public ActionResult GetAddRange()
+        [HttpGet("{cpf}")]
+        public async Task<Cliente> BuscaId(string cpf)
         {
-            _context.AddRange(
-                new Cliente { Nome = "João da silva" },
-                new Cliente { Nome = "João magalhães" },
-                new Cliente { Nome = "João zezinho" },
-                new Cliente { Nome = "João elefante" },
-                new Cliente { Nome = "João palito" }
-            );
-            _context.SaveChanges();
-
-            return Ok();
+            return await this.repo.Busca(cpf);
         }
 
-        // POST api/<ClienteController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("")]
+        public async Task<bool> Insere(Cliente model)
         {
+            return await this.repo.Adiciona(model);
         }
 
-        // PUT api/<ClienteController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{cpf}")]
+        public async Task<bool> AtualizaDados(string cpf, Cliente model)
         {
+            return await this.repo.Atualiza(cpf, model);
         }
 
-        // DELETE api/<ClienteController>/5
-        [HttpDelete("delete/{id}")]
-        
-        public void Delete(int id)
-        {
-            var carro = _context.Carros
-                                .Where(x => x.Id_Placa == id.ToString())
-                                .Single();
-            _context.Carros.Remove(carro);
-            _context.SaveChanges();
-        }
     }
 }

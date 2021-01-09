@@ -6,10 +6,11 @@ namespace Projeto.Entities
 {
     public class Cliente
     {
-        public string Id_Cpf { get; private set; }
+        public string Cpf { get;  set; }
         public string Nome { get; set; }
         public StatusCliente StatusCliente { get; set; }
-        public ICollection<Carro> Carros { get; set; }
+
+        public List<Carro> Carros { get; set; }
 
 
         //public List<Cliente> ListaCliente = new List<Cliente>();
@@ -19,7 +20,7 @@ namespace Projeto.Entities
         //public Cliente(string nome, string cpf, StatusCliente statusCliente)
         //{
         //    Nome = nome;
-        //    Id_Cpf = cpf;
+        //    Cpf = cpf;
         //    StatusCliente = statusCliente;
         //}
 

@@ -5,7 +5,7 @@ namespace Projeto.Entities
 {
     public class Patio
     {
-        public int Id_Patio { get; set; }
+        public int Id_Patio { get; set; }     
         public int Capacidade_Total { get; set; }
         public int Vagas_Ocupadas { get; set; }
         public List<Ticket> Tickets { get; set; }

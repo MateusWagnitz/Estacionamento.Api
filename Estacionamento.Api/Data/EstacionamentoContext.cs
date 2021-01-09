@@ -25,12 +25,12 @@ namespace Estacionamento.Api.Data
         {
             modelBuilder.Entity<Carro>(entity =>
             {
-                entity.HasKey(e => new { e.Id_Placa, e.Id_Dono });
+                entity.HasKey(e => new { e.Placa, e.Id_Dono });
             });
 
             modelBuilder.Entity<Cliente>(entity =>
             {
-                entity.HasKey(e => new { e.Id_Cpf, e.Nome });
+                entity.HasKey(e => new { e.Cpf, e.Nome });
             });
 
             modelBuilder.Entity<Ticket>(entity =>

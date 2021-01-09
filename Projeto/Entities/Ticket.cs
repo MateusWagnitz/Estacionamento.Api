@@ -8,8 +8,9 @@ namespace Projeto.Entities
     {
         public string Id_Ticket { get; private set; }
         public string Id_Carro { get; private set; }
-        public DateTime DataEntrada { get; set; }
-        public DateTime? DataSaida { get; set; }
+        public bool Excluido { get; set; }
+        public DateTime HoraEntrada { get; set; }
+        public DateTime HoraSaida { get; set; }
         public double Valor { get; set; }
         public Carro Carro { get; set; }
 
