@@ -42,10 +42,9 @@ namespace Estacionamento.Api.Repository
 
         //FUNÇÕES DE MANIPULAÇÃO
 
-        public async Task<List<Ticket>> GetAllCars()
+        public async Task<List<Carro>> GetAllCars()
         {
-            var query = await _context.Tickets
-                .Where(a => a.Excluido != true)               
+            var query = await _context.Carros                              
                 .OrderByDescending(car => car.HoraEntrada)
                 .ToListAsync();
 
@@ -57,10 +56,10 @@ namespace Estacionamento.Api.Repository
             return query;
         }
 
-        public async Task<Ticket> GetCarById(string placa)
+        public async Task<Carro> GetCarById(string placa)
         {
-            var query = await _context.Tickets
-                .Where(a => a.Id_Carro == placa)
+            var query = await _context.Carros
+                .Where(a => a.Placa == placa)
                 .FirstOrDefaultAsync();
 
             if (query == null)
@@ -73,14 +72,14 @@ namespace Estacionamento.Api.Repository
 
 
         public async Task<bool> AdicionaCarro(Carro model)
-        {
-            //string placa, string id_Dono, string marca, string modelo
+        {            
             var car = new Carro
             {
+                Placa = model.Placa,
                 Id_Dono = model.Id_Dono,               
                 Marca = model.Marca,
-                Modelo = model.Modelo,
-                HoraEntrada = DateTime.Now,               
+                Modelo = model.Modelo
+                //HoraEntrada = DateTime.Now, 
             };
 
             _context.Add(car);
@@ -108,39 +107,39 @@ namespace Estacionamento.Api.Repository
             return true;
         }
 
-        public async Task<bool> Remove(string placa)
-        {
-            var remover = await _context.Tickets
-                .Where(a => a.Id_Carro == placa)
-                .FirstOrDefaultAsync();
+        //public async Task<bool> Remove(string placa)
+        //{
+        //    var remover = await _context.Tickets
+        //        .Where(a => a.Id_Carro == placa)
+        //        .FirstOrDefaultAsync();
 
-            if (remover == null)
-            {
-                throw new System.InvalidOperationException("O Veículo não foi encontrado!");
-            }
+        //    if (remover == null)
+        //    {
+        //        throw new System.InvalidOperationException("O Veículo não foi encontrado!");
+        //    }
 
-            remover.Excluido = true;
-            remover.HoraSaida = DateTime.Now;
+        //    remover.Excluido = true;
+        //    remover.HoraSaida = DateTime.Now;
 
-            remover.Valor = Calcula(remover.HoraEntrada, remover.HoraSaida);
+        //    remover.Valor = Calcula(remover.HoraEntrada, remover.HoraSaida);
 
-            await _context.SaveChangesAsync();
+        //    await _context.SaveChangesAsync();
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        public double Calcula(DateTime entrada, DateTime saida)
-        {
+        //public double Calcula(DateTime entrada, DateTime saida)
+        //{
 
-            var horaEntrada = entrada.Hour * 60 + entrada.Minute;
-            var horaSaida = saida.Hour * 60 + saida.Minute;
+        //    var horaEntrada = entrada.Hour * 60 + entrada.Minute;
+        //    var horaSaida = saida.Hour * 60 + saida.Minute;
 
-            var valorFinal = Convert.ToDouble(((horaSaida - horaEntrada) / 30) * 5);
+        //    var valorFinal = Convert.ToDouble(((horaSaida - horaEntrada) / 30) * 5);
 
 
 
-            return valorFinal;
-        }
+        //    return valorFinal;
+        //}
 
         // Not Implemented
         Task<List<Patio>> IRepositoryPatio.GetAllCars()
@@ -153,14 +152,5 @@ namespace Estacionamento.Api.Repository
             throw new NotImplementedException();
         }
 
-        public Task<bool> AdicionaTicket(Ticket model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> AtualizaTicket(string placa, Ticket model)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

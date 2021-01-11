@@ -33,10 +33,11 @@ namespace Estacionamento.Api.Controllers
             return await repo.GetCarById(placa);
         }
 
-        [HttpPost("")]
-        public async Task<bool> Insere(Carro car)
+        [HttpPost]
+        public async Task<ActionResult> Insere([FromBody]Carro car)
         {
-            return await this.repo.AdicionaCarro(car);
+            await this.repo.AdicionaCarro(car);
+                return Ok();
         }
 
         [HttpPut("{placa}")]
@@ -45,11 +46,11 @@ namespace Estacionamento.Api.Controllers
             return await this.repo.AtualizaCarro(placa, car);
         }
 
-        [HttpDelete("{placa}")]
-        public async Task<bool> Remove(string placa)
-        {
-            return await this.repo.Remove(placa);
-        }
+        //[HttpDelete("{placa}")]
+        //public async Task<bool> Remove(string placa)
+        //{
+        //    return await this.repo.Remove(placa);
+        //}
 
     }
 }

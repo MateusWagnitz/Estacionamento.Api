@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Estacionamento.Api.Repository
 {
-    public interface IRepositoryPatio
+    public interface IRepositoryTicket
     {
         void Add<T>(T entity) where T : class;
         void Update<T>(T entity) where T : class;
-
         void Delete<T>(T entity) where T : class;
 
-        Task<bool> SaveChangesAsync();
-        Task<List<Patio>> GetAllCars();
-        Task<Patio> GetCarById(string placa);
-        Task<bool> AdicionaCarro(Carro model);
-        Task<bool> AtualizaCarro(string placa, Carro model);
+        Task<bool> SaveChangeAsync();
+
+        Task<Ticket> AddTicket(Ticket model);
+        Task<List<Ticket>> GetAllTickets();
+        Task<Ticket> GetTicketById(int id);
+        Task<Ticket> EndTicket(string placa);
     }
 }

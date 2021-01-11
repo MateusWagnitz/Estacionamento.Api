@@ -6,7 +6,7 @@ namespace Projeto.Entities
 {
     public class Carro
     {
-        public string Placa { get; private set; }
+        public string Placa { get;  set; }
         public string Id_Dono { get; set; }
         public string Marca { get; set; }
         public string Modelo { get; set; }
