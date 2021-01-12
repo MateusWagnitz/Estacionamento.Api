@@ -1,10 +1,11 @@
-﻿using Projeto.Entities;
+﻿using ParkingContext.Models;
+using ParkingModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace Estacionamento.Api.Repository
+namespace ParkingContext
 {
     public interface IRepositoryPatio
     {
@@ -16,10 +17,9 @@ namespace Estacionamento.Api.Repository
         Task<bool> SaveChangesAsync();
         Task<List<Patio>> GetAllCars();
         Task<Patio> GetCarById(string placa);
-        Task<bool> AdicionaCarro(Carro model);
-        Task<bool> AdicionaTicket(Ticket model);
-        Task<bool> AtualizaCarro(string placa, Carro model);
-        Task<bool> AtualizaTicket(string placa, Ticket model);
+        Task<bool> Adiciona(AdicionaPatio model);
+        Task<bool> Atualiza(string placa, AdicionaPatio model);
         Task<bool> Remove(string placa);
+
     }
 }

@@ -1,22 +1,22 @@
-﻿using Estacionamento.Api.Data;
-using Microsoft.EntityFrameworkCore;
-using Projeto.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ParkingContext.Models;
+using ParkingModel;
 
-namespace Estacionamento.Api.Repository
+namespace ParkingContext
 {
     public class RepositoryPatio : IRepositoryPatio
     {
+        private readonly Context _context;
 
-        public readonly EstacionamentoContext _context;
-
-        public RepositoryPatio(EstacionamentoContext context)
+        public RepositoryPatio(Context context)
         {
-           _context = context;
+            _context = context;
         }
+
         // FUNÇÕES GERAIS
         public void Add<T>(T entity) where T : class
         {
@@ -42,25 +42,25 @@ namespace Estacionamento.Api.Repository
 
         //FUNÇÕES DE MANIPULAÇÃO
 
-        public async Task<List<Ticket>> GetAllCars()
+        public async Task<List<Patio>> GetAllCars()
         {
-            var query = await _context.Tickets
-                .Where(a => a.Excluido != true)               
+            var query = await _context.Patio
+                .Where(a => a.Excluido != true)
                 .OrderByDescending(car => car.HoraEntrada)
                 .ToListAsync();
 
             if (query == null)
             {
-                throw new System.InvalidOperationException("Não existem carros no estacionamento neste momento.");
+                throw new System.InvalidOperationException("Não existem veículos no estacionamento.");
             }
 
             return query;
         }
 
-        public async Task<Ticket> GetCarById(string placa)
+        public async Task<Patio> GetCarById(string placa)
         {
-            var query = await _context.Tickets
-                .Where(a => a.Id_Carro == placa)
+            var query = await _context.Patio
+                .Where(a => a.Placa == placa)
                 .FirstOrDefaultAsync();
 
             if (query == null)
@@ -72,28 +72,28 @@ namespace Estacionamento.Api.Repository
         }
 
 
-        public async Task<bool> AdicionaCarro(Carro model)
+        public async Task<bool> Adiciona(AdicionaPatio model)
         {
-            //string placa, string id_Dono, string marca, string modelo
-            var car = new Carro
+            var patio = new Patio
             {
-                Id_Dono = model.Id_Dono,               
-                Marca = model.Marca,
-                Modelo = model.Modelo,
-                HoraEntrada = DateTime.Now,               
+                Cpf = model.Cpf,
+                Placa = model.Placa,
+                HoraEntrada = DateTime.Now,
+                Vaga = model.Vaga,
+                Mensalista = model.Mensalista
             };
 
-            _context.Add(car);
+            _context.Add(patio);
 
             await _context.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<bool> AtualizaCarro(string placa, Carro model)
+        public async Task<bool> Atualiza(string placa, AdicionaPatio model)
         {
 
-            var carro = await _context.Carros
+            var carro = await _context.Patio
                 .Where(a => a.Placa == placa)
                 .FirstOrDefaultAsync();
 
@@ -101,7 +101,11 @@ namespace Estacionamento.Api.Repository
             {
                 throw new System.InvalidOperationException("O Veículo não foi encontrado!");
             }
-         
+
+
+            carro.Vaga = model.Vaga;
+            carro.Mensalista = model.Mensalista;
+            //carro.Info.AddRange(model.Informacoes);
 
             await _context.SaveChangesAsync();
 
@@ -110,8 +114,8 @@ namespace Estacionamento.Api.Repository
 
         public async Task<bool> Remove(string placa)
         {
-            var remover = await _context.Tickets
-                .Where(a => a.Id_Carro == placa)
+            var remover = await _context.Patio
+                .Where(a => a.Placa == placa)
                 .FirstOrDefaultAsync();
 
             if (remover == null)
@@ -122,7 +126,7 @@ namespace Estacionamento.Api.Repository
             remover.Excluido = true;
             remover.HoraSaida = DateTime.Now;
 
-            remover.Valor = Calcula(remover.HoraEntrada, remover.HoraSaida);
+            remover.ValorFinal = Calcula(remover.HoraEntrada, remover.HoraSaida);
 
             await _context.SaveChangesAsync();
 
@@ -142,25 +146,5 @@ namespace Estacionamento.Api.Repository
             return valorFinal;
         }
 
-        // Not Implemented
-        Task<List<Patio>> IRepositoryPatio.GetAllCars()
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Patio> IRepositoryPatio.GetCarById(string placa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> AdicionaTicket(Ticket model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> AtualizaTicket(string placa, Ticket model)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

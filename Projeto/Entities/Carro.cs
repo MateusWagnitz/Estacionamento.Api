@@ -1,33 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-
-namespace Projeto.Entities
+namespace ParkingModel
 {
+
+    [Table("Carros")]
     public class Carro
     {
-        public string Placa { get; private set; }
-        public string Id_Dono { get; set; }
+        public int CaroId { get; set; }
+        public string Placa { get; set; }
         public string Marca { get; set; }
         public string Modelo { get; set; }
-        public DateTime HoraEntrada { get; set; }
-        public List<Ticket> Tickets { get; set; }
-
-
-        //public List<Carro> ListaCarros = new List<Carro>();
-
-        //public Carro() { }
-
-
-
-        //public Carro(string placa, string id_Dono, string marca, string modelo)
-        //{
-        //    Placa = placa;
-        //    Id_Dono = id_Dono;
-        //    Marca = marca;
-        //    Modelo = modelo;
-        //}
+        public string Cor { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }
-
-
