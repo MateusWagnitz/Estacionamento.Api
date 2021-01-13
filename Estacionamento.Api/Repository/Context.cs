@@ -6,10 +6,7 @@ namespace ParkingContext
 {
     public class Context : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql("server=localhost;userid=developer;password=1234567;database=Estacionamento");
-        }
+        public Context(DbContextOptions<Context> options) : base(options) { }
 
         public DbSet<Carro> Carros { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
