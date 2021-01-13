@@ -1,21 +1,22 @@
-﻿
-using System.Collections.Generic;
+﻿using System;
 
-namespace Projeto.Entities
+namespace ParkingModel
 {
     public class Patio
     {
-        public int Id_Patio { get; set; }     
-        public int Capacidade_Total { get; set; }
-        public int Vagas_Ocupadas { get; set; }
-        public List<Ticket> Tickets { get; set; }
+        
+        public int Patio_Id { get; set; }
+        public string Cpf { get; set; }
+        public string Placa { get; set; }
+        public int Vaga { get; set; }
+        public bool Excluido { get; set; }
+        public double ValorFinal { get; set; }
+        public DateTime HoraEntrada { get; set; }
+        public DateTime HoraSaida { get; set; }
+        public bool Mensalista { get; set; }
 
-        //public Patio()
-        //{
-        //    Id_Patio = 1;
-        //    Capacidade_Total = 50;
-        //    Vagas_Ocupadas = 0;
-
-        //}
     }
+
+
+
 }
