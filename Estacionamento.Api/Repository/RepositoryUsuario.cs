@@ -65,7 +65,7 @@ namespace ParkingContext
 
             if (query == null)
             {
-                throw new System.InvalidOperationException("O usuário não foi encontrado!");
+                throw new InvalidOperationException("O usuário não foi encontrado!");
             }
 
             var usuario = new UsuarioBusca
@@ -88,7 +88,7 @@ namespace ParkingContext
 
             if (busca != null)
             {
-                throw new System.InvalidOperationException("Esse usuário já possui cadastro!");
+                throw new InvalidOperationException("Esse usuário já possui cadastro!");
             }
 
             var usuario = new Usuario
@@ -117,7 +117,7 @@ namespace ParkingContext
 
             if (usuario == null)
             {
-                throw new System.InvalidOperationException("O usuário não foi encontrado!");
+                throw new InvalidOperationException("O usuário não foi encontrado!");
             }
 
             usuario.NomeCompleto = model.NomeCompleto;

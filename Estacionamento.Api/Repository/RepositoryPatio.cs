@@ -51,7 +51,7 @@ namespace ParkingContext
 
             if (query == null)
             {
-                throw new System.InvalidOperationException("Não existem veículos no estacionamento.");
+                throw new InvalidOperationException("Não existem veículos no estacionamento.");
             }
 
             return query;
@@ -65,7 +65,7 @@ namespace ParkingContext
 
             if (query == null)
             {
-                throw new System.InvalidOperationException("O Veículo não foi encontrado!");
+                throw new InvalidOperationException("O Veículo não foi encontrado!");
             }
 
             return query;
@@ -99,13 +99,12 @@ namespace ParkingContext
 
             if (carro == null)
             {
-                throw new System.InvalidOperationException("O Veículo não foi encontrado!");
+                throw new InvalidOperationException("O Veículo não foi encontrado!");
             }
 
 
             carro.Vaga = model.Vaga;
-            carro.Mensalista = model.Mensalista;
-            //carro.Info.AddRange(model.Informacoes);
+            carro.Mensalista = model.Mensalista;           
 
             await _context.SaveChangesAsync();
 
@@ -120,7 +119,7 @@ namespace ParkingContext
 
             if (remover == null)
             {
-                throw new System.InvalidOperationException("O Veículo não foi encontrado!");
+                throw new InvalidOperationException("O Veículo não foi encontrado!");
             }
 
             remover.Excluido = true;

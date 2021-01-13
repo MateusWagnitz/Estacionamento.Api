@@ -14,6 +14,7 @@ namespace ParkingContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             // -------------------------- Alterações Usuário
 
             modelBuilder.Entity<Usuario>()
@@ -43,15 +44,13 @@ namespace ParkingContext
             modelBuilder.Entity<Patio>()
                 .HasKey(a => a.Patio_Id);
                 
-
-            //modelBuilder.Entity<Patio>(entity => entity.HasKey(e => e.Patio_Id));
-
             modelBuilder.Entity<Patio>()
                 .Property(s => s.Cpf)
                 .HasColumnName("Cpf_Id")
                 .IsRequired();
 
             // -------------------------- Alterações Carro
+
             modelBuilder.Entity<Carro>()
                 .HasKey(a => a.CaroId);
 
@@ -65,8 +64,3 @@ namespace ParkingContext
         }
     }
 }
-
-
-//modelBuilder.Entity<Carro>()
-//    .Property(a => a.CaroId)
-//    .HasColumnName("Carro_Id");
