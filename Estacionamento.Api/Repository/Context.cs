@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore;
 using ParkingModel;
 using Projeto.Entities;
 
@@ -40,8 +39,6 @@ namespace ParkingContext
                 .Property(s => s.Id_Ticket)
                 .HasColumnName("Id_Ticket")
                 .IsRequired();
-
-
 
 
             // -------------------------- Alterações Pátio

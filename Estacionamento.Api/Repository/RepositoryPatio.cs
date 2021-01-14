@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ParkingContext.Models;
 using ParkingModel;
-using Projeto.Entities;
 
 namespace ParkingContext
 {
@@ -70,7 +68,6 @@ namespace ParkingContext
 
             return query;
         }
-
 
     }
 }

@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ParkingContext;
-using ParkingContext.Models;
 using ParkingModel;
 
 namespace ParkingWebApi.Controller

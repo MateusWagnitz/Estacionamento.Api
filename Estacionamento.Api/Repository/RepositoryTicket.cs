@@ -135,9 +135,7 @@ namespace Estacionamento.Api.Repository
 
 
             return valorFinal;
-        }
-
-        
+        }    
       
     }
 }
