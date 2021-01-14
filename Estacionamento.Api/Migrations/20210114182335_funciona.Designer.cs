@@ -9,8 +9,8 @@ using ParkingContext;
 namespace Estacionamento.Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210114120504_TicketMigrationInitial")]
-    partial class TicketMigrationInitial
+    [Migration("20210114182335_funciona")]
+    partial class funciona
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,9 @@ namespace Estacionamento.Api.Migrations
                         .HasColumnName("Carro_Id")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ClienteId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Cor")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -38,14 +41,31 @@ namespace Estacionamento.Api.Migrations
                     b.Property<string>("Placa")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("UsuarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("CaroId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("ClienteId");
 
-                    b.ToTable("Carros");
+                    b.ToTable("Carro");
+                });
+
+            modelBuilder.Entity("ParkingModel.Cliente", b =>
+                {
+                    b.Property<int>("ClienteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Cpf")
+                        .IsRequired()
+                        .HasColumnName("Cpf_Id")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NomeCompleto")
+                        .HasColumnName("NomeCompleto")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("ClienteId");
+
+                    b.ToTable("Cliente");
                 });
 
             modelBuilder.Entity("ParkingModel.Patio", b =>
@@ -70,39 +90,12 @@ namespace Estacionamento.Api.Migrations
                     b.ToTable("Patio");
                 });
 
-            modelBuilder.Entity("ParkingModel.Usuario", b =>
-                {
-                    b.Property<int>("UsuarioId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Cpf")
-                        .IsRequired()
-                        .HasColumnName("Cpf_Id")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("NomeCompleto")
-                        .HasColumnName("NomeCompleto")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Telefone")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("UsuarioId");
-
-                    b.ToTable("Usuario");
-                });
-
             modelBuilder.Entity("Projeto.Entities.Ticket", b =>
                 {
-                    b.Property<string>("Id_Ticket")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<int>("TicketId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id_Ticket")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Excluido")
                         .HasColumnType("tinyint(1)");
@@ -122,16 +115,16 @@ namespace Estacionamento.Api.Migrations
                     b.Property<double>("ValorFinal")
                         .HasColumnType("double");
 
-                    b.HasKey("Id_Ticket");
+                    b.HasKey("TicketId");
 
                     b.ToTable("Ticket");
                 });
 
             modelBuilder.Entity("ParkingModel.Carro", b =>
                 {
-                    b.HasOne("ParkingModel.Usuario", "Usuario")
+                    b.HasOne("ParkingModel.Cliente", "Cliente")
                         .WithMany("Carros")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("ClienteId");
                 });
 #pragma warning restore 612, 618
         }

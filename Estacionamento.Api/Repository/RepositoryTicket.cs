@@ -71,7 +71,7 @@ namespace Estacionamento.Api.Repository
         {
             var ticket = new Ticket
             {
-
+                //TicketId = model.TicketId,
                 Id_Carro = model.Placa,
                 HoraEntrada = DateTime.Now,
                 Mensalista = model.Mensalista

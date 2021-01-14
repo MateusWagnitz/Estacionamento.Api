@@ -33,12 +33,12 @@ namespace ParkingContext
             // -------------------------- Alterações Ticket
 
             modelBuilder.Entity<Ticket>()
-                .HasKey(a => a.Id_Ticket);
+                .HasKey(a => a.TicketId);
 
             modelBuilder.Entity<Ticket>()
-                .Property(s => s.Id_Ticket)
-                .HasColumnName("Id_Ticket")
-                .IsRequired();
+                .Property(s => s.TicketId)
+                .HasColumnName("Id_Ticket");
+
 
 
             // -------------------------- Alterações Pátio

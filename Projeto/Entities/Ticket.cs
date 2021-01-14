@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace Projeto.Entities
 {
     public class Ticket
     {
-        public string Id_Ticket { get;  set; }
+        
+        public int TicketId { get;  set; }
         public string Id_Carro { get;  set; }
         public bool Excluido { get; set; }
         public double ValorFinal { get; set; }
