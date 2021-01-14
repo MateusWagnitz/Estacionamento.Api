@@ -9,38 +9,38 @@ namespace ParkingWebApi.Controller
 {
     [Route("site/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class ClienteController : ControllerBase
     {
 
 
-        private readonly IRepositoryUsuario repo;
+        private readonly IRepositoryCliente repo;
 
-        public UsuarioController(IRepositoryUsuario repo)
+        public ClienteController(IRepositoryCliente repo)
         {
             this.repo = repo;
         }
 
 
         [HttpGet]
-        public async Task<List<Usuario>> Busca()
+        public async Task<List<Cliente>> Busca()
         {
             return await this.repo.BuscaGeral();
         }
 
         [HttpGet("{cpf}")]
-        public async Task<UsuarioBusca> BuscaId(string cpf)
+        public async Task<ClienteBusca> BuscaId(string cpf)
         {
             return await this.repo.Busca(cpf);
         }
 
         [HttpPost("")]
-        public async Task<bool> Insere(Usuario model)
+        public async Task<bool> Insere(Cliente model)
         {
             return await this.repo.Adiciona(model);
         }
 
         [HttpPut("{cpf}")]
-        public async Task<bool> AtualizaDados(string cpf, Usuario model)
+        public async Task<bool> AtualizaDados(string cpf, Cliente model)
         {
             return await this.repo.Atualiza(cpf, model);
         }

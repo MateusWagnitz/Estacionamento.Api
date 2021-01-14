@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Estacionamento.Api.Repository;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,8 +28,8 @@ namespace Estacionamento.Api
             });
 
             services.AddScoped<IRepositoryPatio, RepositoryPatio>();
-            services.AddScoped<IRepositoryUsuario, RepositoryUsuario>();
-            services.AddScoped<IRepositoryPatio, RepositoryPatio>();
+            services.AddScoped<IRepositoryCliente, RepositoryCliente>();
+            services.AddScoped<IRepositoryTicket, RepositoryTicket>();
 
             services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();

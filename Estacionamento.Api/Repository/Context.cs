@@ -9,8 +9,8 @@ namespace ParkingContext
     {
         public Context(DbContextOptions<Context> options) : base(options) { }
 
-        public DbSet<Carro> Carros { get; set; }
-        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Carro> Carro { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Patio> Patio { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
 
@@ -19,17 +19,28 @@ namespace ParkingContext
 
             // -------------------------- Alterações Usuário
 
-            modelBuilder.Entity<Usuario>()
+            modelBuilder.Entity<Cliente>()
                 .Property(s => s.Cpf)
                 .HasColumnName("Cpf_Id")
                 .IsRequired();
 
-            modelBuilder.Entity<Usuario>()
-                .HasKey(a => a.UsuarioId);
+            modelBuilder.Entity<Cliente>()
+                .HasKey(a => a.ClienteId);
 
-            modelBuilder.Entity<Usuario>()
+            modelBuilder.Entity<Cliente>()
                 .Property(s => s.NomeCompleto)
-                .HasColumnName("NomesCompleto");
+                .HasColumnName("NomeCompleto");
+
+            // -------------------------- Alterações Ticket
+
+            modelBuilder.Entity<Ticket>()
+                .HasKey(a => a.Id_Ticket);
+
+            modelBuilder.Entity<Ticket>()
+                .Property(s => s.Id_Ticket)
+                .HasColumnName("Id_Ticket")
+                .IsRequired();
+
 
 
 
@@ -53,7 +64,7 @@ namespace ParkingContext
                 .HasColumnName("Carro_Id");
 
             modelBuilder.Entity<Carro>()
-                .HasOne(a => a.Usuario)
+                .HasOne(a => a.Cliente)
                 .WithMany(a => a.Carros);
         }
     }

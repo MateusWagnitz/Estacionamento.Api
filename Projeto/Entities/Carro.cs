@@ -3,7 +3,6 @@
 namespace ParkingModel
 {
 
-    [Table("Carros")]
     public class Carro
     {
         public int CaroId { get; set; }
@@ -11,6 +10,6 @@ namespace ParkingModel
         public string Marca { get; set; }
         public string Modelo { get; set; }
         public string Cor { get; set; }
-        public Usuario Usuario { get; set; }
+        public Cliente Cliente { get; set; }
     }
 }

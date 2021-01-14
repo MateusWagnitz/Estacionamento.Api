@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ParkingContext.Models
 {
-    public class UsuarioBusca
+    public class ClienteBusca
     {
         public string NomeCompleto { get; set; }
         public int Idade { get; set; }

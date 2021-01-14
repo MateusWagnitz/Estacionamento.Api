@@ -8,11 +8,11 @@ using ParkingModel;
 
 namespace ParkingContext
 {
-    public class RepositoryUsuario : IRepositoryUsuario
+    public class RepositoryCliente : IRepositoryCliente
     {
         private readonly Context _context;
 
-        public RepositoryUsuario(Context context)
+        public RepositoryCliente(Context context)
         {
             _context = context;
         }
@@ -42,23 +42,21 @@ namespace ParkingContext
 
         //FUNÇÕES DE MANIPULAÇÃO
 
-        public async Task<List<Usuario>> BuscaGeral()
+        public async Task<List<Cliente>> BuscaGeral()
         {
-            var query = await _context.Usuario
+            var query = await _context.Cliente
                 .Include(e => e.Carros)
                 .ToListAsync();
 
             return query;
         }
 
-        public async Task<UsuarioBusca> Busca(string cpf)
+        public async Task<ClienteBusca> Busca(string cpf)
         {
-            var query = await _context.Usuario
+            var query = await _context.Cliente
                 .Where(a => a.Cpf == cpf)
                 .Select(a => new {
-                    a.NomeCompleto,
-                    a.Idade,
-                    a.Telefone
+                    a.NomeCompleto
                 })
                 .FirstOrDefaultAsync();
 
@@ -68,21 +66,19 @@ namespace ParkingContext
                 throw new InvalidOperationException("O usuário não foi encontrado!");
             }
 
-            var usuario = new UsuarioBusca
+            var usuario = new ClienteBusca
             {
-                NomeCompleto = query.NomeCompleto,
-                Idade = query.Idade,
-                Telefone = query.Telefone
+                NomeCompleto = query.NomeCompleto
             };
 
             return usuario;
         }
 
 
-        public async Task<bool> Adiciona(Usuario model)
+        public async Task<bool> Adiciona(Cliente model)
         {
 
-            var busca = await _context.Usuario
+            var busca = await _context.Cliente
                 .Where(a => a.Cpf == model.Cpf)
                 .FirstOrDefaultAsync();
 
@@ -91,13 +87,10 @@ namespace ParkingContext
                 throw new InvalidOperationException("Esse usuário já possui cadastro!");
             }
 
-            var usuario = new Usuario
+            var usuario = new Cliente
             {
                 Cpf = model.Cpf,
                 NomeCompleto = model.NomeCompleto,
-                DataNascimento = model.DataNascimento,
-                Email = model.Email,
-                Telefone = model.Telefone,
                 Carros = model.Carros
             };
 
@@ -108,10 +101,10 @@ namespace ParkingContext
             return true;
         }
 
-        public async Task<bool> Atualiza(string cpf, Usuario model)
+        public async Task<bool> Atualiza(string cpf, Cliente model)
         {
 
-            var usuario = await _context.Usuario
+            var usuario = await _context.Cliente
                 .Where(a => a.Cpf == cpf)
                 .FirstOrDefaultAsync();
 
@@ -121,8 +114,6 @@ namespace ParkingContext
             }
 
             usuario.NomeCompleto = model.NomeCompleto;
-            usuario.DataNascimento = model.DataNascimento;
-            usuario.Email = model.Email;
             usuario.Carros = model.Carros;
 
             await _context.SaveChangesAsync();
