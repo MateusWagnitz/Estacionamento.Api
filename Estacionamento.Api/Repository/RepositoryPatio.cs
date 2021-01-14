@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ParkingContext.Models;
 using ParkingModel;
+using Projeto.Entities;
 
 namespace ParkingContext
 {
@@ -46,7 +47,6 @@ namespace ParkingContext
         {
             var query = await _context.Patio
                 .Where(a => a.Excluido != true)
-                .OrderByDescending(car => car.HoraEntrada)
                 .ToListAsync();
 
             if (query == null)
@@ -71,79 +71,6 @@ namespace ParkingContext
             return query;
         }
 
-
-        public async Task<bool> Adiciona(AdicionaPatio model)
-        {
-            var patio = new Patio
-            {
-                Cpf = model.Cpf,
-                Placa = model.Placa,
-                HoraEntrada = DateTime.Now,
-                Vaga = model.Vaga,
-                Mensalista = model.Mensalista
-            };
-
-            _context.Add(patio);
-
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<bool> Atualiza(string placa, AdicionaPatio model)
-        {
-
-            var carro = await _context.Patio
-                .Where(a => a.Placa == placa)
-                .FirstOrDefaultAsync();
-
-            if (carro == null)
-            {
-                throw new InvalidOperationException("O Veículo não foi encontrado!");
-            }
-
-
-            carro.Vaga = model.Vaga;
-            carro.Mensalista = model.Mensalista;           
-
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<bool> Remove(string placa)
-        {
-            var remover = await _context.Patio
-                .Where(a => a.Placa == placa)
-                .FirstOrDefaultAsync();
-
-            if (remover == null)
-            {
-                throw new InvalidOperationException("O Veículo não foi encontrado!");
-            }
-
-            remover.Excluido = true;
-            remover.HoraSaida = DateTime.Now;
-
-            remover.ValorFinal = Calcula(remover.HoraEntrada, remover.HoraSaida);
-
-            await _context.SaveChangesAsync();
-
-            return true;
-        }
-
-        public double Calcula(DateTime entrada, DateTime saida)
-        {
-
-            var horaEntrada = entrada.Hour * 60 + entrada.Minute;
-            var horaSaida = saida.Hour * 60 + saida.Minute;
-
-            var valorFinal = Convert.ToDouble(((horaSaida - horaEntrada) / 30) * 5);
-
-
-
-            return valorFinal;
-        }
 
     }
 }

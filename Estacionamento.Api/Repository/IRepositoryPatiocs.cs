@@ -17,9 +17,6 @@ namespace ParkingContext
         Task<bool> SaveChangesAsync();
         Task<List<Patio>> GetAllCars();
         Task<Patio> GetCarById(string placa);
-        Task<bool> Adiciona(AdicionaPatio model);
-        Task<bool> Atualiza(string placa, AdicionaPatio model);
-        Task<bool> Remove(string placa);
 
     }
 }

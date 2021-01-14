@@ -1,4 +1,5 @@
-﻿using Projeto.Entities;
+﻿using ParkingContext.Models;
+using Projeto.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace Estacionamento.Api.Repository
         void Delete<T>(T entity) where T : class;
 
         Task<bool> SaveChangeAsync();
-
-        Task<Ticket> AddTicket(Ticket model);
         Task<List<Ticket>> GetAllTickets();
         Task<Ticket> GetTicketById(int id);
-        Task<Ticket> EndTicket(string placa);
+        Task<bool> Adiciona(AdicionaTicket model);
+        Task<bool> Atualiza(string placa, AdicionaTicket model);
+        Task<bool> Remove(string placa);
     }
 }

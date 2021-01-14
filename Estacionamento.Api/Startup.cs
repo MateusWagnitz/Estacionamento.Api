@@ -28,6 +28,7 @@ namespace Estacionamento.Api
 
             services.AddScoped<IRepositoryPatio, RepositoryPatio>();
             services.AddScoped<IRepositoryUsuario, RepositoryUsuario>();
+            services.AddScoped<IRepositoryPatio, RepositoryPatio>();
 
             services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();

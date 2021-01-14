@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore;
 using ParkingModel;
+using Projeto.Entities;
 
 namespace ParkingContext
 {
@@ -11,6 +12,7 @@ namespace ParkingContext
         public DbSet<Carro> Carros { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Patio> Patio { get; set; }
+        public DbSet<Ticket> Ticket { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

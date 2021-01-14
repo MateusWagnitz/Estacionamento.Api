@@ -1,6 +1,6 @@
-﻿using Estacionamento.Api.Data;
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using ParkingContext;
+using ParkingContext.Models;
 using Projeto.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,9 +11,9 @@ namespace Estacionamento.Api.Repository
 {
     public class RepositoryTicket : IRepositoryTicket
     {
-        public readonly EstacionamentoContext _context;
+        public readonly Context _context;
 
-        public RepositoryTicket(EstacionamentoContext context)
+        public RepositoryTicket(Context context)
         {
             _context = context;
         }
@@ -38,67 +38,86 @@ namespace Estacionamento.Api.Repository
         }
 
 
-        public async Task<Ticket> AddTicket(Ticket model)
+        public async Task<List<Ticket>> GetAllTickets()
         {
-            //public Ticket(string id_Ticket, string id_Carro, bool excluido, DateTime horaEntrada, DateTime horaSaida, double valor)
-            var tic = new Ticket
-            {
-                Id_Ticket = model.Id_Ticket,
-                Id_Carro = model.Id_Carro,
-                HoraEntrada = DateTime.Now,
-            };
-
-            _context.Add(tic);
-
-            await _context.SaveChangesAsync();
-
-            return tic;
-        }
-
-        public async Task<List<Ticket>> GetAllTickets(Ticket model)
-        {
-            var query = await _context.Tickets
+            var query = await _context.Ticket
+                .Where(a => a.Excluido != true)
                 .OrderByDescending(car => car.HoraEntrada)
                 .ToListAsync();
 
             if (query == null)
             {
-                throw new System.InvalidOperationException("Não existem tickets no estacionamento neste momento.");
-            }
-
-            return query.ToList();
-        }
-
-        public async Task<Ticket> GetTicketById(int id)
-        {
-            var query = await _context.Tickets
-                .Where(a => a.Excluido != true)
-                .FirstOrDefaultAsync();
-
-            if (query == null)
-            {
-                throw new System.InvalidOperationException("O Ticket não foi encontrado!");
+                throw new InvalidOperationException("Não existem Tickets no estacionamento.");
             }
 
             return query;
         }
 
-
-        public async Task<bool> EndTicket(string placa)
+        public async Task<Ticket> GetTicketById(int id)
         {
-            var remover = await _context.Tickets
+            var query = await _context.Ticket
+                .Where(a => a.Excluido != true)
+                .FirstOrDefaultAsync();
+
+            if (query == null)
+            {
+                throw new InvalidOperationException("O Ticket não foi encontrado!");
+            }
+
+            return query;
+        }
+
+        public async Task<bool> Adiciona(AdicionaTicket model)
+        {
+            var ticket = new Ticket
+            {
+
+                Id_Carro = model.Placa,
+                HoraEntrada = DateTime.Now,
+                Mensalista = model.Mensalista
+            };
+
+            _context.Add(ticket);
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> Atualiza(string placa, AdicionaTicket model)
+        {
+
+            var carro = await _context.Ticket
+                .Where(a => a.Id_Carro == placa)
+                .FirstOrDefaultAsync();
+
+            if (carro == null)
+            {
+                throw new InvalidOperationException("O Veículo não foi encontrado!");
+            }
+
+            carro.Mensalista = model.Mensalista;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> Remove(string placa)
+        {
+            var remover = await _context.Ticket
                 .Where(a => a.Id_Carro == placa)
                 .FirstOrDefaultAsync();
 
             if (remover == null)
             {
-                throw new System.InvalidOperationException("O Ticket não foi encontrado!");
+                throw new InvalidOperationException("O Veículo não foi encontrado!");
             }
 
             remover.Excluido = true;
             remover.HoraSaida = DateTime.Now;
 
-            remover.Valor = Calcula(remover.HoraEntrada, remover.HoraSaida);
+            remover.ValorFinal = Calcula(remover.HoraEntrada, remover.HoraSaida);
 
             await _context.SaveChangesAsync();
 
@@ -118,15 +137,8 @@ namespace Estacionamento.Api.Repository
             return valorFinal;
         }
 
-        Task<Ticket> IRepositoryTicket.EndTicket(string placa)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Ticket>> GetAllTickets()
-        {
-            throw new NotImplementedException();
-        }
+        
+      
     }
 }
 
