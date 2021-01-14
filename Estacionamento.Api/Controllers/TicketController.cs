@@ -1,11 +1,12 @@
 ﻿using Estacionamento.Api.Repository;
 using Microsoft.AspNetCore.Mvc;
+using ParkingContext.Models;
+using Projeto.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Estacionamento.Api.Controllers
 {
@@ -21,36 +22,34 @@ namespace Estacionamento.Api.Controllers
             this.repo = repo;
         }
 
-        // GET: api/<TicketController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<List<Ticket>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return await this.repo.GetAllTickets();
         }
 
-        // GET api/<TicketController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{placa}")]
+        public async Task<Ticket> BuscaId(int id)
         {
-            return "value";
+            return await this.repo.GetTicketById(id);
         }
 
-        // POST api/<TicketController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("")]
+        public async Task<bool> Insere(AdicionaTicket model)
         {
+            return await this.repo.Adiciona(model);
         }
 
-        // PUT api/<TicketController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{placa}")]
+        public async Task<bool> AtualizaDados(string placa, AdicionaTicket car)
         {
+            return await this.repo.Atualiza(placa, car);
         }
 
-        // DELETE api/<TicketController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{placa}")]
+        public async Task<bool> Remove(string placa)
         {
+            return await this.repo.Remove(placa);
         }
     }
 }

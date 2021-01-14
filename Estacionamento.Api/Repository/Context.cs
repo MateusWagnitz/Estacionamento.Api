@@ -24,12 +24,6 @@ namespace ParkingContext
                 .HasColumnName("Cpf_Id")
                 .IsRequired();
 
-
-            modelBuilder.Entity<Usuario>()
-                .Property(s => s.Email)
-                .IsRequired()
-                .HasMaxLength(50);
-
             modelBuilder.Entity<Usuario>()
                 .HasKey(a => a.UsuarioId);
 
@@ -37,8 +31,6 @@ namespace ParkingContext
                 .Property(s => s.NomeCompleto)
                 .HasColumnName("NomesCompleto");
 
-            modelBuilder.Entity<Usuario>()
-                .Ignore(a => a.Idade);
 
 
             // -------------------------- Alterações Pátio

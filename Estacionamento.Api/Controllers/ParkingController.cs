@@ -32,22 +32,5 @@ namespace ParkingWebApi.Controller
             return await this.repo.GetCarById(placa);
         }
 
-        [HttpPost("")]
-        public async Task<bool> Insere(AdicionaPatio car)
-        {
-            return await this.repo.Adiciona(car);
-        }
-
-        [HttpPut("{placa}")]
-        public async Task<bool> AtualizaDados(string placa, AdicionaPatio car)
-        {
-            return await this.repo.Atualiza(placa, car);
-        }
-
-        [HttpDelete("{placa}")]
-        public async Task<bool> Remove(string placa)
-        {
-            return await this.repo.Remove(placa);
-        }
     }
 }
