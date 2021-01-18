@@ -8,7 +8,7 @@ namespace Projeto.Entities
     {
         
         public int TicketId { get;  set; }
-        public string Id_Carro { get;  set; }
+        public string CarroId { get;  set; }
         public bool Excluido { get; set; }
         public double ValorFinal { get; set; }
         public DateTime HoraEntrada { get; set; }

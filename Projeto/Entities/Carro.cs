@@ -5,7 +5,7 @@ namespace ParkingModel
 
     public class Carro
     {
-        public int CaroId { get; set; }
+        public int CarroId { get; set; }
         public string Placa { get; set; }
         public string Marca { get; set; }
         public string Modelo { get; set; }

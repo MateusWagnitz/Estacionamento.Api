@@ -72,7 +72,7 @@ namespace Estacionamento.Api.Repository
             var ticket = new Ticket
             {
                 //TicketId = model.TicketId,
-                Id_Carro = model.Placa,
+                CarroId = model.Placa,
                 HoraEntrada = DateTime.Now,
                 Mensalista = model.Mensalista
             };
@@ -88,7 +88,7 @@ namespace Estacionamento.Api.Repository
         {
 
             var carro = await _context.Ticket
-                .Where(a => a.Id_Carro == placa)
+                .Where(a => a.CarroId == placa)
                 .FirstOrDefaultAsync();
 
             if (carro == null)
@@ -106,7 +106,7 @@ namespace Estacionamento.Api.Repository
         public async Task<bool> Remove(string placa)
         {
             var remover = await _context.Ticket
-                .Where(a => a.Id_Carro == placa)
+                .Where(a => a.CarroId == placa)
                 .FirstOrDefaultAsync();
 
             if (remover == null)

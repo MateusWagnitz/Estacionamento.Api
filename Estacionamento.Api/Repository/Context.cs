@@ -54,10 +54,10 @@ namespace ParkingContext
             // -------------------------- Alterações Carro
 
             modelBuilder.Entity<Carro>()
-                .HasKey(a => a.CaroId);
+                .HasKey(a => a.CarroId);
 
             modelBuilder.Entity<Carro>()
-                .Property(a => a.CaroId)
+                .Property(a => a.CarroId)
                 .HasColumnName("Carro_Id");
 
             modelBuilder.Entity<Carro>()
