@@ -67,13 +67,15 @@ namespace Estacionamento.Api.Repository
             return query;
         }
 
-        public async Task<bool> Adiciona(AdicionaTicket model)
+        public async Task<bool> Adiciona(Ticket model)
         {
             var ticket = new Ticket
             {
                 //TicketId = model.TicketId,
-                CarroId = model.Placa,
-                HoraEntrada = DateTime.Now,
+                CarroId = model.CarroId,
+                HoraEntrada = model.HoraEntrada,
+                HoraSaida = model.HoraSaida,
+                ValorFinal = model.ValorFinal,
                 Mensalista = model.Mensalista
             };
 
@@ -109,17 +111,17 @@ namespace Estacionamento.Api.Repository
                 .Where(a => a.CarroId == placa)
                 .FirstOrDefaultAsync();
 
-            if (remover == null)
-            {
-                throw new InvalidOperationException("O Veículo não foi encontrado!");
-            }
+            //if (remover == null)
+            //{
+            //    throw new InvalidOperationException("O Veículo não foi encontrado!");
+            //}
 
-            remover.Excluido = true;
-            remover.HoraSaida = DateTime.Now;
+            //remover.Excluido = true;
+            //remover.HoraSaida = DateTime.Now;
 
-            remover.ValorFinal = Calcula(remover.HoraEntrada, remover.HoraSaida);
+            //remover.ValorFinal = Calcula(remover.HoraEntrada, remover.HoraSaida);
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
 
             return true;
         }

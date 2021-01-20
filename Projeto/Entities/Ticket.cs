@@ -11,8 +11,8 @@ namespace Projeto.Entities
         public string CarroId { get;  set; }
         public bool Excluido { get; set; }
         public double ValorFinal { get; set; }
-        public DateTime HoraEntrada { get; set; }
-        public DateTime HoraSaida { get; set; }
+        public string HoraEntrada { get; set; }
+        public string HoraSaida { get; set; }
         public bool Mensalista { get; set; }
 
 

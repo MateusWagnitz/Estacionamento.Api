@@ -33,7 +33,7 @@ namespace Estacionamento.Api.Controllers
         }
 
         [HttpPost("")]
-        public async Task<bool> Insere(AdicionaTicket model)
+        public async Task<bool> Insere(Ticket model)
         {
             return await this.repo.Adiciona(model);
         }

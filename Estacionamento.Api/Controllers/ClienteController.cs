@@ -33,8 +33,8 @@ namespace ParkingWebApi.Controller
             return await this.repo.Busca(cpf);
         }
 
-        [HttpPost("")]
-        public async Task<bool> Insere(Cliente model)
+        [HttpPost]
+        public async Task<bool> Insere([FromBody]Cliente model)
         {
             return await this.repo.Adiciona(model);
         }

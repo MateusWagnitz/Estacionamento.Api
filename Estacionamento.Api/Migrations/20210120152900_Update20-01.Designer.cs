@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingContext;
 
 namespace Estacionamento.Api.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20210120152900_Update20-01")]
+    partial class Update2001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +52,7 @@ namespace Estacionamento.Api.Migrations
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnName("Cpf")
+                        .HasColumnName("CpfId")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("NomeCompleto")
@@ -70,7 +72,7 @@ namespace Estacionamento.Api.Migrations
 
                     b.Property<string>("Cpf")
                         .IsRequired()
-                        .HasColumnName("Cpf")
+                        .HasColumnName("CpfId")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("Excluido")

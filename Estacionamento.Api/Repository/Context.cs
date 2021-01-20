@@ -20,7 +20,7 @@ namespace ParkingContext
 
             modelBuilder.Entity<Cliente>()
                 .Property(s => s.Cpf)
-                .HasColumnName("CpfId")
+                .HasColumnName("Cpf")
                 .IsRequired();
 
             modelBuilder.Entity<Cliente>()
@@ -48,7 +48,7 @@ namespace ParkingContext
                 
             modelBuilder.Entity<Patio>()
                 .Property(s => s.Cpf)
-                .HasColumnName("CpfId")
+                .HasColumnName("Cpf")
                 .IsRequired();
 
             // -------------------------- Alterações Carro
