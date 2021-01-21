@@ -21,7 +21,6 @@ namespace Estacionamento.Api.Migrations
                 {
                     b.Property<int>("CarroId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("carroId")
                         .HasColumnType("int");
 
                     b.Property<int?>("ClienteId")

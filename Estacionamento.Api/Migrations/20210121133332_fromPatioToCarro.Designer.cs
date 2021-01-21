@@ -9,8 +9,8 @@ using ParkingContext;
 namespace Estacionamento.Api.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210120173824_CpfUpdate")]
-    partial class CpfUpdate
+    [Migration("20210121133332_fromPatioToCarro")]
+    partial class fromPatioToCarro
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,9 +21,9 @@ namespace Estacionamento.Api.Migrations
 
             modelBuilder.Entity("ParkingModel.Carro", b =>
                 {
-                    b.Property<string>("CarroId")
-                        .HasColumnName("carroId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<int>("CarroId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<int?>("ClienteId")
                         .HasColumnType("int");
@@ -118,7 +118,7 @@ namespace Estacionamento.Api.Migrations
 
             modelBuilder.Entity("ParkingModel.Carro", b =>
                 {
-                    b.HasOne("ParkingModel.Cliente", "Cliente")
+                    b.HasOne("ParkingModel.Cliente", null)
                         .WithMany("Carros")
                         .HasForeignKey("ClienteId");
                 });

@@ -7,11 +7,11 @@ using ParkingModel;
 
 namespace ParkingContext
 {
-    public class RepositoryPatio : IRepositoryPatio
+    public class RepositoryCarros : IRepositoryCarros
     {
         private readonly Context _context;
 
-        public RepositoryPatio(Context context)
+        public RepositoryCarros(Context context)
         {
             _context = context;
         }
@@ -41,9 +41,9 @@ namespace ParkingContext
 
         //FUNÇÕES DE MANIPULAÇÃO
 
-        public async Task<List<Patio>> GetAllCars()
+        public async Task<List<Carro>> GetAllCars()
         {
-            var query = await _context.Patio
+            var query = await _context.Carro
                 .ToListAsync();
 
             if (query == null)
@@ -54,9 +54,9 @@ namespace ParkingContext
             return query;
         }
 
-        public async Task<Patio> GetCarById(string placa)
+        public async Task<Carro> GetCarById(string placa)
         {
-            var query = await _context.Patio
+            var query = await _context.Carro
                 .Where(a => a.Placa == placa)
                 .FirstOrDefaultAsync();
 

@@ -12,21 +12,21 @@ namespace ParkingWebApi.Controller
     {
 
 
-        private readonly IRepositoryPatio repo;
+        private readonly IRepositoryCarros repo;
 
-        public CarrosController(IRepositoryPatio repo)
+        public CarrosController(IRepositoryCarros repo)
         {
             this.repo = repo;
         }
 
         [HttpGet]
-        public async Task<List<Patio>> Get()
+        public async Task<List<Carro>> Get()
         {
             return await this.repo.GetAllCars();
         }
 
         [HttpGet("{placa}")]
-        public async Task<Patio> BuscaId(string placa)
+        public async Task<Carro> BuscaId(string placa)
         {
             return await this.repo.GetCarById(placa);
         }

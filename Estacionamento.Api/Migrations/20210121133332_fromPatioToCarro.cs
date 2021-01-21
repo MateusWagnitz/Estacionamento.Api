@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Estacionamento.Api.Migrations
 {
-    public partial class funciona : Migration
+    public partial class fromPatioToCarro : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +13,7 @@ namespace Estacionamento.Api.Migrations
                 {
                     ClienteId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Cpf_Id = table.Column<string>(nullable: false),
+                    Cpf = table.Column<string>(nullable: false),
                     NomeCompleto = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -26,50 +25,49 @@ namespace Estacionamento.Api.Migrations
                 name: "Patio",
                 columns: table => new
                 {
-                    Patio_Id = table.Column<int>(nullable: false)
+                    PatioId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Cpf_Id = table.Column<string>(nullable: false),
+                    Cpf = table.Column<string>(nullable: false),
                     Placa = table.Column<string>(nullable: true),
                     Excluido = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patio", x => x.Patio_Id);
+                    table.PrimaryKey("PK_Patio", x => x.PatioId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Ticket",
                 columns: table => new
                 {
-                    Id_Ticket = table.Column<int>(nullable: false)
+                    TicketId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Id_Carro = table.Column<string>(nullable: true),
+                    CarroId = table.Column<string>(nullable: true),
                     Excluido = table.Column<bool>(nullable: false),
                     ValorFinal = table.Column<double>(nullable: false),
-                    HoraEntrada = table.Column<DateTime>(nullable: false),
-                    HoraSaida = table.Column<DateTime>(nullable: false),
+                    HoraEntrada = table.Column<string>(nullable: true),
+                    HoraSaida = table.Column<string>(nullable: true),
                     Mensalista = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ticket", x => x.Id_Ticket);
+                    table.PrimaryKey("PK_Ticket", x => x.TicketId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Carro",
                 columns: table => new
                 {
-                    Carro_Id = table.Column<int>(nullable: false)
+                    CarroId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Placa = table.Column<string>(nullable: true),
                     Marca = table.Column<string>(nullable: true),
                     Modelo = table.Column<string>(nullable: true),
-                    Cor = table.Column<string>(nullable: true),
                     ClienteId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Carro", x => x.Carro_Id);
+                    table.PrimaryKey("PK_Carro", x => x.CarroId);
                     table.ForeignKey(
                         name: "FK_Carro_Cliente_ClienteId",
                         column: x => x.ClienteId,
