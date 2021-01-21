@@ -39,9 +39,9 @@ namespace Estacionamento.Api.Controllers
         }
 
         [HttpPut("{ticketId}")]
-        public async Task<bool> AtualizaDados(string placa, AdicionaTicket car)
+        public async Task<bool> AtualizaDados(int ticketId, Ticket ticket)
         {
-            return await this.repo.Atualiza(placa, car);
+            return await this.repo.Atualiza(ticketId, ticket);
         }
 
         [HttpDelete("{ticketId}")]

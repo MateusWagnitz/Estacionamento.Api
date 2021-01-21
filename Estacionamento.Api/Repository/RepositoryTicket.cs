@@ -84,19 +84,20 @@ namespace Estacionamento.Api.Repository
             return true;
         }
 
-        public async Task<bool> Atualiza(string placa, AdicionaTicket model)
+        public async Task<bool> Atualiza(int ticketId, Ticket ticket)   //, string horaEntrada, string horaSaida, double valorFinal
         {
 
-            var carro = await _context.Ticket
-                .Where(a => a.CarroId == placa)
+
+            var tic = await _context.Ticket
+                .Where(a => a.TicketId == ticketId)
                 .FirstOrDefaultAsync();
 
-            if (carro == null)
-            {
-                throw new InvalidOperationException("O Veículo não foi encontrado!");
-            }
-
-            carro.Mensalista = model.Mensalista;
+            //if (carro == null)
+            //{
+            //    throw new InvalidOperationException("O Veículo não foi encontrado!");
+            //}
+            //.Where(b => b.HoraEntrada == horaEntrada).Where(b => b.HoraSaida == horaSaida).Where(c => c.ValorFinal == valorFinal)
+            //carro.Mensalista = model.Mensalista;
 
             await _context.SaveChangesAsync();
 
