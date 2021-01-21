@@ -26,10 +26,10 @@ namespace Estacionamento.Api.Controllers
             return await this.repo.GetAllTickets();
         }
 
-        [HttpGet("{placa}")]
-        public async Task<Ticket> BuscaId(int id)
+        [HttpGet("{ticketId}")]
+        public async Task<Ticket> BuscaId(int ticketId)
         {
-            return await this.repo.GetTicketById(id);
+            return await this.repo.GetTicketById(ticketId);
         }
 
         [HttpPost("")]
@@ -38,16 +38,16 @@ namespace Estacionamento.Api.Controllers
             return await this.repo.Adiciona(model);
         }
 
-        [HttpPut("{placa}")]
+        [HttpPut("{ticketId}")]
         public async Task<bool> AtualizaDados(string placa, AdicionaTicket car)
         {
             return await this.repo.Atualiza(placa, car);
         }
 
-        [HttpDelete("{placa}")]
-        public async Task<bool> Remove(string placa)
+        [HttpDelete("{ticketId}")]
+        public async Task<bool> Remove(int ticketId)
         {
-            return await this.repo.Remove(placa);
+            return await this.repo.Remove(ticketId);
         }
     }
 }

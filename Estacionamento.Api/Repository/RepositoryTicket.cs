@@ -42,7 +42,7 @@ namespace Estacionamento.Api.Repository
         {
             var query = await _context.Ticket
                 .Where(a => a.Excluido != true)
-                .OrderByDescending(car => car.HoraEntrada)
+                .OrderBy(car => car.TicketId)
                 .ToListAsync();
 
             if (query == null)
@@ -53,16 +53,15 @@ namespace Estacionamento.Api.Repository
             return query;
         }
 
-        public async Task<Ticket> GetTicketById(int id)
+        public async Task<Ticket> GetTicketById(int ticketId)
         {
             var query = await _context.Ticket
-                .Where(a => a.Excluido != true)
+                .Where(a => a.TicketId == ticketId)
                 .FirstOrDefaultAsync();
 
             if (query == null)
-            {
                 throw new InvalidOperationException("O Ticket não foi encontrado!");
-            }
+
 
             return query;
         }
@@ -70,8 +69,7 @@ namespace Estacionamento.Api.Repository
         public async Task<bool> Adiciona(Ticket model)
         {
             var ticket = new Ticket
-            {
-                //TicketId = model.TicketId,
+            {              
                 CarroId = model.CarroId,
                 HoraEntrada = model.HoraEntrada,
                 HoraSaida = model.HoraSaida,
@@ -105,12 +103,15 @@ namespace Estacionamento.Api.Repository
             return true;
         }
 
-        public async Task<bool> Remove(string placa)
+        public async Task<bool> Remove(int ticketId)
         {
             var remover = await _context.Ticket
-                .Where(a => a.CarroId == placa)
+                .Where(a => a.TicketId == ticketId)
                 .FirstOrDefaultAsync();
 
+            remover.Excluido = true;
+
+            await _context.SaveChangesAsync();
             //if (remover == null)
             //{
             //    throw new InvalidOperationException("O Veículo não foi encontrado!");

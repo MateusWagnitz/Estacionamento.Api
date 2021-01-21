@@ -13,9 +13,9 @@ namespace Estacionamento.Api.Repository
 
         Task<bool> SaveChangeAsync();
         Task<List<Ticket>> GetAllTickets();
-        Task<Ticket> GetTicketById(int id);
+        Task<Ticket> GetTicketById(int ticketId);
         Task<bool> Adiciona(Ticket model);
         Task<bool> Atualiza(string placa, AdicionaTicket model);
-        Task<bool> Remove(string placa);
+        Task<bool> Remove(int ticketId);
     }
 }
