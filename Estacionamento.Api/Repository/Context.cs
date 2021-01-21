@@ -40,7 +40,6 @@ namespace ParkingContext
                 .HasColumnName("TicketId");
 
 
-
             // -------------------------- Alterações Pátio
 
             modelBuilder.Entity<Patio>()
@@ -55,14 +54,6 @@ namespace ParkingContext
 
             modelBuilder.Entity<Carro>()
                 .HasKey(a => a.CarroId);
-
-            modelBuilder.Entity<Carro>()
-                .Property(a => a.CarroId)
-                .HasColumnName("carroId");
-
-            modelBuilder.Entity<Carro>()
-                .HasOne(a => a.Cliente)
-                .WithMany(a => a.Carros);
         }
     }
 }

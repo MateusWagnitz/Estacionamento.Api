@@ -8,13 +8,13 @@ namespace ParkingWebApi.Controller
 {
     [Route("site/[controller]")]
     [ApiController]
-    public class ParkingController : ControllerBase
+    public class CarrosController : ControllerBase
     {
 
 
         private readonly IRepositoryPatio repo;
 
-        public ParkingController(IRepositoryPatio repo)
+        public CarrosController(IRepositoryPatio repo)
         {
             this.repo = repo;
         }
@@ -29,6 +29,12 @@ namespace ParkingWebApi.Controller
         public async Task<Patio> BuscaId(string placa)
         {
             return await this.repo.GetCarById(placa);
+        }
+
+        [HttpPost]
+        public async Task<bool> Insere([FromBody] Carro model)
+        {
+            return await this.repo.AddCar(model);
         }
 
     }

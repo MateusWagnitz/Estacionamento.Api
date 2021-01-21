@@ -44,7 +44,6 @@ namespace ParkingContext
         public async Task<List<Patio>> GetAllCars()
         {
             var query = await _context.Patio
-                .Where(a => a.Excluido != true)
                 .ToListAsync();
 
             if (query == null)
@@ -67,6 +66,32 @@ namespace ParkingContext
             }
 
             return query;
+        }
+
+        public async Task<bool> AddCar(Carro model)
+        {
+
+            var busca = await _context.Carro
+                .Where(a => a.Placa == model.Placa)
+                .FirstOrDefaultAsync();
+
+            if (busca != null)
+            {
+                throw new InvalidOperationException("Esse carro já possui cadastro!");
+            }
+
+            var carro = new Carro
+            {
+                Placa = model.Placa,
+                Marca = model.Marca,
+                Modelo = model.Modelo
+            };
+
+            _context.Add(carro);
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
     }
