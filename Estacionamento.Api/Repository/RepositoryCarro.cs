@@ -7,11 +7,11 @@ using ParkingModel;
 
 namespace ParkingContext
 {
-    public class RepositoryCarros : IRepositoryCarros
+    public class RepositoryCarro : IRepositoryCarro
     {
         private readonly Context _context;
 
-        public RepositoryCarros(Context context)
+        public RepositoryCarro(Context context)
         {
             _context = context;
         }
@@ -71,11 +71,11 @@ namespace ParkingContext
         public async Task<bool> AddCar(Carro model)
         {
 
-            var busca = await _context.Carro
+            var query = await _context.Carro
                 .Where(a => a.Placa == model.Placa)
                 .FirstOrDefaultAsync();
 
-            if (busca != null)
+            if (query != null)
             {
                 throw new InvalidOperationException("Esse carro já possui cadastro!");
             }

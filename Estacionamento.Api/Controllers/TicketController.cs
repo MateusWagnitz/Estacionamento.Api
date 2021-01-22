@@ -27,13 +27,13 @@ namespace Estacionamento.Api.Controllers
         }
 
         [HttpGet("{ticketId}")]
-        public async Task<Ticket> BuscaId(int ticketId)
+        public async Task<Ticket> GetById(int ticketId)
         {
             return await this.repo.GetTicketById(ticketId);
         }
 
         [HttpPost("")]
-        public async Task<bool> Insere(Ticket model)
+        public async Task<bool> Insere([FromBody]Ticket model)
         {
             return await this.repo.Adiciona(model);
         }

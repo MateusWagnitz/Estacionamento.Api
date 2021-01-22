@@ -85,13 +85,13 @@ namespace Estacionamento.Api.Repository
 
         public async Task<bool> Atualiza(int ticketId, Ticket model) 
         {
-            var ticket = await _context.Ticket
+            var query = await _context.Ticket
                 .Where(a => a.TicketId == ticketId)
                 .FirstOrDefaultAsync();
 
-            ticket.HoraSaida = model.HoraSaida;
-            ticket.HoraEntrada = model.HoraEntrada;
-            ticket.ValorFinal = model.ValorFinal;
+            query.HoraSaida = model.HoraSaida;
+            query.HoraEntrada = model.HoraEntrada;
+            query.ValorFinal = model.ValorFinal;
 
             await _context.SaveChangesAsync();
 
@@ -100,11 +100,11 @@ namespace Estacionamento.Api.Repository
 
         public async Task<bool> Remove(int ticketId)
         {
-            var remover = await _context.Ticket
+            var query = await _context.Ticket
                 .Where(a => a.TicketId == ticketId)
                 .FirstOrDefaultAsync();
 
-            remover.Excluido = true;
+            query.Excluido = true;
 
             await _context.SaveChangesAsync();           
 

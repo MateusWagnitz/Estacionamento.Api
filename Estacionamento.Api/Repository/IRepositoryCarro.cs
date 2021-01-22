@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ParkingContext
 {
-    public interface IRepositoryCarros
+    public interface IRepositoryCarro
     {
         void Add<T>(T entity) where T : class;
         void Update<T>(T entity) where T : class;

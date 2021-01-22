@@ -8,13 +8,13 @@ namespace ParkingWebApi.Controller
 {
     [Route("site/[controller]")]
     [ApiController]
-    public class CarrosController : ControllerBase
+    public class CarroController : ControllerBase
     {
 
 
-        private readonly IRepositoryCarros repo;
+        private readonly IRepositoryCarro repo;
 
-        public CarrosController(IRepositoryCarros repo)
+        public CarroController(IRepositoryCarro repo)
         {
             this.repo = repo;
         }
@@ -26,13 +26,13 @@ namespace ParkingWebApi.Controller
         }
 
         [HttpGet("{placa}")]
-        public async Task<Carro> BuscaId(string placa)
+        public async Task<Carro> GetById(string placa)
         {
             return await this.repo.GetCarById(placa);
         }
 
         [HttpPost]
-        public async Task<bool> Insere([FromBody] Carro model)
+        public async Task<bool> Insert([FromBody]Carro model)
         {
             return await this.repo.AddCar(model);
         }

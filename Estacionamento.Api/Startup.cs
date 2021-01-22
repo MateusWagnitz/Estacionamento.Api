@@ -27,7 +27,7 @@ namespace Estacionamento.Api
                 
             });
 
-            services.AddScoped<IRepositoryCarros, RepositoryCarros>();
+            services.AddScoped<IRepositoryCarro, RepositoryCarro>();
             services.AddScoped<IRepositoryCliente, RepositoryCliente>();
             services.AddScoped<IRepositoryTicket, RepositoryTicket>();
 

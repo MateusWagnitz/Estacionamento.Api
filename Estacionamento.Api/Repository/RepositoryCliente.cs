@@ -78,11 +78,11 @@ namespace ParkingContext
         public async Task<bool> Adiciona(Cliente model)
         {
 
-            var busca = await _context.Cliente
+            var query = await _context.Cliente
                 .Where(a => a.Cpf == model.Cpf)
                 .FirstOrDefaultAsync();
 
-            if (busca != null)
+            if (query != null)
             {
                 throw new InvalidOperationException("Esse usuário já possui cadastro!");
             }
@@ -104,17 +104,17 @@ namespace ParkingContext
         public async Task<bool> Atualiza(string cpf, Cliente model)
         {
 
-            var usuario = await _context.Cliente
+            var query = await _context.Cliente
                 .Where(a => a.Cpf == cpf)
                 .FirstOrDefaultAsync();
 
-            if (usuario == null)
+            if (query == null)
             {
                 throw new InvalidOperationException("O usuário não foi encontrado!");
             }
 
-            usuario.NomeCompleto = model.NomeCompleto;
-            usuario.Carros = model.Carros;
+            model.NomeCompleto = model.NomeCompleto;
+            model.Carros = model.Carros;
 
             await _context.SaveChangesAsync();
 
