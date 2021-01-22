@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ParkingContext;
-using ParkingContext.Models;
 using Projeto.Entities;
 using System;
 using System.Collections.Generic;
@@ -84,20 +83,13 @@ namespace Estacionamento.Api.Repository
             return true;
         }
 
-        public async Task<bool> Atualiza(int ticketId, Ticket ticket)   //, string horaEntrada, string horaSaida, double valorFinal
+        public async Task<bool> Atualiza(int ticketId, Ticket ticket) 
         {
 
 
             var tic = await _context.Ticket
                 .Where(a => a.TicketId == ticketId)
                 .FirstOrDefaultAsync();
-
-            //if (carro == null)
-            //{
-            //    throw new InvalidOperationException("O Veículo não foi encontrado!");
-            //}
-            //.Where(b => b.HoraEntrada == horaEntrada).Where(b => b.HoraSaida == horaSaida).Where(c => c.ValorFinal == valorFinal)
-            //carro.Mensalista = model.Mensalista;
 
             await _context.SaveChangesAsync();
 
@@ -112,18 +104,7 @@ namespace Estacionamento.Api.Repository
 
             remover.Excluido = true;
 
-            await _context.SaveChangesAsync();
-            //if (remover == null)
-            //{
-            //    throw new InvalidOperationException("O Veículo não foi encontrado!");
-            //}
-
-            //remover.Excluido = true;
-            //remover.HoraSaida = DateTime.Now;
-
-            //remover.ValorFinal = Calcula(remover.HoraEntrada, remover.HoraSaida);
-
-            //await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();           
 
             return true;
         }
