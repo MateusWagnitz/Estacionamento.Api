@@ -55,7 +55,7 @@ namespace Estacionamento.Api.Repository
         public async Task<Ticket> GetTicketById(int ticketId)
         {
             var query = await _context.Ticket
-                .Where(a => a.TicketId == ticketId)
+                .Where(a => a.TicketId == ticketId && !a.Excluido)
                 .FirstOrDefaultAsync();
 
             if (query == null)
@@ -83,13 +83,15 @@ namespace Estacionamento.Api.Repository
             return true;
         }
 
-        public async Task<bool> Atualiza(int ticketId, Ticket ticket) 
+        public async Task<bool> Atualiza(int ticketId, Ticket model) 
         {
-
-
-            var tic = await _context.Ticket
+            var ticket = await _context.Ticket
                 .Where(a => a.TicketId == ticketId)
                 .FirstOrDefaultAsync();
+
+            ticket.HoraSaida = model.HoraSaida;
+            ticket.HoraEntrada = model.HoraEntrada;
+            ticket.ValorFinal = model.ValorFinal;
 
             await _context.SaveChangesAsync();
 
